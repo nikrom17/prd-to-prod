@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "design-brief/v1/elements.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["brief", "elements"],
+  "properties": {
+    "brief": { "const": "design-brief v1" },
+    "elements": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/element" }
+    }
+  },
+  "$defs": {
+    "token": {
+      "type": "string",
+      "pattern": "^--[a-z0-9-]+$",
+      "description": "A CSS variable name defined in styles.css"
+    },
+    "size": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "height": { "type": "number", "description": "px" },
+        "min_width": { "type": "number", "description": "px" },
+        "padding": { "type": "string", "description": "CSS shorthand using tokens or px, e.g. '0 var(--space-4)'" },
+        "gap": { "type": "string" },
+        "radius": { "$ref": "#/$defs/token" },
+        "font": { "$ref": "#/$defs/token", "description": "type token, e.g. --type-button" },
+        "icon": { "type": "number", "description": "icon size, px" }
+      }
+    },
+    "element": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9-]*$" },
+        "name": { "type": "string", "description": "Human label shown on the Elements page" },
+        "group": { "type": "string", "description": "Elements-page group, e.g. B1" },
+        "status": { "enum": ["draft", "settled", "replaced"] },
+        "replaced_by": { "type": "string" },
+        "purpose": { "type": "string", "description": "One sentence: what it's for" },
+        "variants": {
+          "type": "object",
+          "description": "variant key -> tokens it uses",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "background": { "$ref": "#/$defs/token" },
+              "foreground": { "$ref": "#/$defs/token" },
+              "border": { "$ref": "#/$defs/token" },
+              "note": { "type": "string" }
+            }
+          }
+        },
+        "sizes": {
+          "type": "object",
+          "description": "size key -> measurements",
+          "additionalProperties": { "$ref": "#/$defs/size" }
+        },
+        "states": {
+          "type": "array",
+          "items": { "enum": ["default", "pressed", "focus", "dimmed", "disabled", "selected", "error", "loading", "empty"] }
+        },
+        "rules": { "type": "array", "items": { "type": "string" }, "description": "Usage rules, one per line" },
+        "a11y": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}
