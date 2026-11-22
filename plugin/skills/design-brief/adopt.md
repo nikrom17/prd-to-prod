@@ -1,10 +1,10 @@
-# Adopt the brief · design-brief v1
+# Adopt the brief · design-brief v2
 
 Paste this after the brief, once you've read the agent's list of gaps.
 
 ---
 
-Bring this canvas in line with design-brief v1. Fix every gap you listed. Restructure only; don't change how any screen looks or behaves.
+Bring this canvas in line with design-brief v2. Fix every gap you listed. Restructure only; don't change how any screen looks or behaves.
 
 0. **Scope:** the current pages are {{CURRENT_PAGES}}. Every other design page is archived: add "Archived, not part of the spec" to its title, and leave it out of `flows.md`, the tags, and the token work. Don't delete it.
 

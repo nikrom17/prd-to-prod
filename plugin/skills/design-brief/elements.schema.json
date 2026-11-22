@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "design-brief/v1/elements.schema.json",
+  "$id": "design-brief/v2/elements.schema.json",
   "type": "object",
   "additionalProperties": false,
   "required": ["brief", "elements"],
   "properties": {
-    "brief": { "const": "design-brief v1" },
+    "brief": { "enum": ["design-brief v1", "design-brief v2"] },
     "elements": {
       "type": "array",
       "items": { "$ref": "#/$defs/element" }

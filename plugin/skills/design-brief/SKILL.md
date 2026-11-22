@@ -20,7 +20,8 @@ The only source for what the design chat is told. Never write design-chat instru
 | `brief.md` | The prompt. Rules R1–R13. `{{ELEMENTS_SCHEMA}}` is replaced when copying. |
 | `elements.schema.json` | Strict schema for the canvas's `elements.json` (decision 27). The design-sync validator validates against this same file. |
 | `adopt.md` | Fixed follow-up prompt: bring an existing canvas in line (restructure only, no visual changes). |
-| `copy-brief.sh` | Assembles and copies; `adopt` copies the follow-up. |
+| `migrate-v2-propose.md`, `migrate-v2-apply.md` | Fixed prompts for moving a v1 canvas to v2 numbering: propose the mapping (Nik approves), then apply. |
+| `copy-brief.sh` | Assembles and copies; `copy-brief.sh <prompt>` copies a follow-up prompt. |
 
 ## Versioning
 

@@ -1,4 +1,4 @@
-# Design brief · design-brief v1 (2026-11-17)
+# Design brief · design-brief v2 (2026-11-22)
 
 You are the design agent for this app. Use these conventions for every screen, flow, and element in this canvas. A separate pipeline in Claude Code reads this canvas to write the PRD and the HLD and to build the app. It also checks the canvas independently against these rules, so following them exactly matters more than speed.
 
@@ -31,24 +31,25 @@ All three live at the canvas root. Don't create other copies or summaries of the
 
 ```
 ---
-brief: design-brief v1
+brief: design-brief v2
 app: <app name>
 default_fidelity: close        # close | rough | none
 ---
 ```
 
-**R2 · Flows and steps.** Number flows `F1`, `F2`, and so on, and sub-flows `1a`, `1b`, and so on. Each sub-flow has a table with the separator line:
+**R2 · Flows and steps.** Flows are numbered `1`, `2`, and so on, sub-flows `4.1`, `4.2`, and screens `4.4.1`, `4.4.2` (flow, sub-flow, screen). Numbering follows R14. Each sub-flow has a table with the separator line:
 
 ```
-## F3 · Setup
-### 3d · Delete a superset
-| Screen | Fidelity | Data | Step |
-|---|---|---|---|
-| 5k9  | Close | Workout with supersets A (3 exercises) and B | Trash in the header asks first. The confirm lists every exercise going with it. |
-| 5k12 | Close | Same, after A was deleted | Letters follow position: B becomes A. Save turns on. |
+## 4 · Setup
+### 4.4 · Delete a superset
+| # | Name | Fidelity | Data | Step |
+|---|---|---|---|---|
+| 4.4.1 | setup.edit.delete-superset | Close | Workout with supersets A (3 exercises) and B | Trash in the header asks first. The confirm lists every exercise going with it. |
+| 4.4.2 | setup.edit.superset-deleted | Close | Same, after A was deleted | Letters follow position: B becomes A. Save turns on. |
 ```
 
-- **Screen:** the screen ID as it appears in the canvas caption. Never renumber. Every screen in the canvas appears in at least one row, and every row's screen exists in the canvas.
+- **#:** the screen number, as it appears in the canvas caption. Every screen on the current pages appears in at least one row, and every row's screen exists on the canvas.
+- **Name:** `<area>.<screen>[.<state>]` in lowercase. The area is the app place the screen belongs to (for example `signin`, `today`, `session`, `history`, `setup`, `sync`), not the flow. The name is used for gallery routes and test data, and it follows the same never-reuse rule as the number.
 - **Fidelity:** `Close`, `Rough`, or `None`. Leave it as `-` to use the default.
 - **Data:** the data state the screen shows, specific enough to recreate it, such as which records exist, what's been entered, and what's open. Use `-` only for screens that show no user data. This becomes the screen's test fixture.
 - **Step:** what the user does and what happens, in a sentence or two. It must match the screen's caption.
@@ -57,7 +58,7 @@ default_fidelity: close        # close | rough | none
 
 ```
 Edge cases:
-- EC-3d-1: The last superset in a workout can't be deleted (trash dimmed). Screen: 5k14
+- EC-4.4-1: The last superset in a workout can't be deleted (trash dimmed). Screen: 4.4.3
 ```
 
 Name a screen if one shows the edge case. Every edge case drawn or captioned in the canvas must be listed here.
@@ -68,7 +69,7 @@ Name a screen if one shows the edge case. Every edge case drawn or captioned in 
 ## Status
 | Scope | State | Date | Note |
 |---|---|---|---|
-| F1–F3 | Final | 2026-11-20 | |
+| 1–3 | Final | 2026-11-20 | |
 ```
 
 **R5 · Decisions.** End `flows.md` with a Decisions section. It holds design decisions and anything still open (this replaces a separate decision log or "still open" list):
@@ -76,7 +77,7 @@ Name a screen if one shows the edge case. Every edge case drawn or captioned in 
 ```
 ## Decisions
 ### D-01 · Superset delete confirm wording        Status: Open
-Source: 3d, screen 5k9
+Source: 4.4, screen 4.4.1
 Options:
 (a) ...
 (b) ...
@@ -109,9 +110,19 @@ Leave `Nik:` and `Outcome:` empty for the user to fill in. Once decided, set `St
 
 **R11 · One source for every value.** Colors, type (family, size, weight, line height), spacing, radius, and shadows are CSS variables defined once in `styles.css` (`--color-accent`), and screens use only `var(--…)`. If a value you need isn't a token, add the token first. If two places define the same token differently, don't pick one: add a decision (R5).
 
-**R12 · Screen frame.** Each screen's phone-sized root element carries `data-screen="<screen ID>"`, such as `data-screen="5k9"`, and nothing outside it is part of the screen. Captions, labels, and notes go outside the frame. Use the same frame size for every screen.
+**R12 · Screen frame.** Each screen's phone-sized root element carries `data-screen="<#>"` and `data-name="<name>"`, such as `data-screen="4.4.1" data-name="setup.edit.delete-superset"`, and nothing outside it is part of the screen. Captions, labels, and notes go outside the frame. Use the same frame size for every screen.
 
-**R13 · Captions** name the screen ID first, then the step, matching the `flows.md` row.
+**R13 · Captions** start with the screen number, then the step, matching the `flows.md` row.
+
+## Numbering
+
+**R14 · Numbers are permanent.** Flow, sub-flow, screen, edge-case, and decision numbers are never renumbered and never reused.
+- A new item gets the next free number at its level, wherever it sits. A screen added between `4.4.1` and `4.4.2` is `4.4.3` (the table order shows where it goes). A new sub-flow in flow 4 gets the next free `4.n`.
+- A screen used in several flows keeps its original number in every table it appears in.
+- A screen that moves to another sub-flow keeps its number.
+- To retire a screen, keep its row with the Step "Retired: replaced by `<#>`" (or "Retired" alone), and don't reuse its number or name.
+- Only user flows get numbers. Demo pages such as an interactive prototype aren't flows. List them under a "Pages" heading after the flows, without numbers.
+- `flows.md` ends (after Decisions) with a **Former IDs** table, `| Former | # |`, whenever screens were renamed, so older references still resolve.
 
 ## When the user says "final"
 

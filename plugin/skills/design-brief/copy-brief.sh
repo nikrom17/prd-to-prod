@@ -1,14 +1,19 @@
 #!/bin/sh
 # Assemble the design brief (brief.md + elements.schema.json) and copy it to the clipboard.
-# Usage: copy-brief.sh [adopt] [--print]
+# Usage: copy-brief.sh [<prompt> ["<current pages>"]] [--print]
 #   (no arg) the brief: brief.md + elements.schema.json
-#   adopt "<current pages>"   the follow-up prompt that brings an existing canvas in line with the brief
+#   adopt "<current pages>"   bring an existing canvas in line with the brief
+#   migrate-v2-propose        v1 canvas: propose the new screen numbers (send with the v2 brief)
+#   migrate-v2-apply          v1 canvas: apply the approved numbers
 set -eu
 dir="$(cd "$(dirname "$0")" && pwd)"
-if [ "${1:-}" = "adopt" ]; then
-  shift
-  pages="${1:?adopt needs the current page names, e.g. adopt \"the Final page\"}"; shift
-  out="$(sed -n '/^---$/,$p' "$dir/adopt.md" | sed 1d | sed "s/{{CURRENT_PAGES}}/$pages/")"
+if [ -n "${1:-}" ] && [ "$1" != "--print" ]; then
+  name="$1"; shift
+  [ -f "$dir/$name.md" ] || { echo "No prompt named $name (have: adopt, migrate-v2-propose, migrate-v2-apply)"; exit 1; }
+  pages=""
+  if [ -n "${1:-}" ] && [ "$1" != "--print" ]; then pages="$1"; shift; fi
+  if grep -q "{{CURRENT_PAGES}}" "$dir/$name.md" && [ -z "$pages" ]; then echo "$name needs the current page names"; exit 1; fi
+  out="$(sed -n '/^---$/,$p' "$dir/$name.md" | sed 1d | sed "s/{{CURRENT_PAGES}}/$pages/")"
 else
 out="$(python3 -I -c '
 import sys, pathlib
