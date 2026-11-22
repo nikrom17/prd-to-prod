@@ -10,7 +10,8 @@ The only source for what the design chat is told. Never write design-chat instru
 ## Run
 
 1. Run `sh "${CLAUDE_SKILL_DIR:-$(dirname "$0")}/copy-brief.sh"`. It joins `brief.md` with `elements.schema.json` and copies the result to the clipboard. Use `--print` to show it instead.
-2. Tell Nik the version (the first line) and that it's ready to paste into the Claude Design chat. Don't repeat the brief in chat.
+2. For a canvas that existed before the brief: after Nik pastes the brief and the design agent lists the gaps, run `copy-brief.sh adopt` for the follow-up prompt (`adopt.md`).
+3. Tell Nik the version (the first line) and that it's ready to paste into the Claude Design chat. Don't repeat the brief in chat.
 
 ## Files
 
@@ -18,7 +19,8 @@ The only source for what the design chat is told. Never write design-chat instru
 |---|---|
 | `brief.md` | The prompt. Rules R1–R13. `{{ELEMENTS_SCHEMA}}` is replaced when copying. |
 | `elements.schema.json` | Strict schema for the canvas's `elements.json` (decision 27). The design-sync validator validates against this same file. |
-| `copy-brief.sh` | Assembles and copies. |
+| `adopt.md` | Fixed follow-up prompt: bring an existing canvas in line (restructure only, no visual changes). |
+| `copy-brief.sh` | Assembles and copies; `adopt` copies the follow-up. |
 
 ## Versioning
 

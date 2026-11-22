@@ -97,7 +97,7 @@ Leave `Nik:` and `Outcome:` empty for the user to fill in. Once decided, set `St
 
 **R9 · Settled elements become classes.** When an element is settled, move its styles from inline into a class in `styles.css`, named after its ID (`.button-action`, with `.button-action--accent` for variants), and use that class on every screen. Draft elements may stay inline.
 
-**R10 · Tag every element on every screen** with attributes from `elements.json`:
+**R10 · Tag every Settled element on every screen** with attributes from `elements.json` (Draft elements can be tagged once they're settled):
 
 ```html
 <button data-slot="button.action" data-variant="accent" data-size="action">Start workout</button>

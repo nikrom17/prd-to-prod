@@ -16,7 +16,8 @@ Goal: everything stage 1 needs is in one place, unedited, before any question or
    - **Docs** (PRDs, notes): copy the file as it is, as `inputs/<original-name>`.
    - **Design canvas** (`inputs/design-canvas.md`): link, the version ID and file count at intake, and the list of pages. Don't copy design files (decision 23).
    - **Reference pages** (Notion, Docs): link plus what each one is for. Stage 1 reads them in full.
-4. **Ask once:** "Is there existing code, a POC, design docs, data sources, or a platform you want to reuse?" Add anything named to step 3. Check the POC registry for matches.
+4. **Ask once:** "Is there existing material I should read: docs, data, past chats, designs, or POC results?" Add anything named to step 3. Don't ask about the stack or platform: the default stack is the starting assumption, and the stack is committed at the HLD (stage 5). Registry lookups happen in stage 2.
+   - **Design canvas made before the brief:** have Nik paste the `design-brief` and then its `adopt` prompt into the design chat first. Record the canvas once it has `flows.md` and a Status table, so stage 1 syncs the PRD against flows that are marked Final or In progress, not against loose captions.
 5. **Write `intake.md`:**
    - **North star:** Nik's own words for the goal, quoted from the inputs with a pointer to each source. No paraphrase.
    - **Inputs:** a table of each file, what it is, and its date. Note which input is newest when inputs disagree; stage 1 reconciles them, intake doesn't.
