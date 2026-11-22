@@ -1,8 +1,8 @@
-# PRD: Idea-to-App skill
+# PRD: prd-to-prod skill
 
 **Status:** Draft v3 (2026-11-15), ready for Nik's review. v3 adds UI flows, the element system, and design validation (sections 6.0 and 6.1b).
 **Owner:** Nik
-**Working name:** `idea-to-app`
+**Name:** `prd-to-prod` (renamed from the working name idea-to-app, 2026-11-22, G-06)
 **Related** (in `~/Claude/Projects/Weekly Meal Plan Auto Scheduler/` until housekeeping): `prd-step-retrospective.md` (how the Dunraven PRD was made), `prd-to-app-process.md` (how Dunraven Manor was built), `poc-plan.md` (how the meal-plan POCs were run), `housekeeping-plan.md`
 
 ---
@@ -207,7 +207,7 @@ Explore items don't block this gate. They're what stage 2 is for. **HLD-ready** 
 
 Nik designs flows and screens in Claude Design. The PRD stays the "what and why"; `flows.md` is the written source of truth for UI behavior; the element spec says exactly what components to build.
 
-**Fidelity levels.** Set per app in `idea-to-app.config.json` (`ui.fidelity`), with overrides per screen in `flows.md`.
+**Fidelity levels.** Set per app in `prd-to-prod.config.json` (`ui.fidelity`), with overrides per screen in `flows.md`.
 
 | Level | What's checked | Stage 1b |
 |---|---|---|
@@ -300,7 +300,7 @@ Cheap habits that don't churn while flows are still changing. They're written do
 Playwright renders the design screen and the built screen at the same iPhone viewport and compares element by element, not pixel by pixel:
 
 - **Computed styles** (color, font, padding, radius) must match the tokens exactly.
-- **Boxes** (position, size) must fall within `ui.tolerance_px` in `idea-to-app.config.json`, starting at 2. Overlap, clipping, off-screen, or wrong order always fails.
+- **Boxes** (position, size) must fall within `ui.tolerance_px` in `prd-to-prod.config.json`, starting at 2. Overlap, clipping, off-screen, or wrong order always fails.
 - **Three-way triage** (spec, design screen, built app), so a design error isn't blamed on the build:
 
   | Design screen vs spec | App vs spec | Verdict |
@@ -557,18 +557,20 @@ Outcome: (a), 2026-11-15. A pin is saved only when Nik marks a design version fi
 33. **The design comparison tool is built and tuned during the Workout Log build** (D-28), with screenshot grading as the fallback.
 34. **Lean subagent sessions** (section 6.5): each agent gets only the tools and MCP servers its role needs, and context per agent is measured at the first lane.
 35. **This PRD is retired once the skill works.** It's replaced by a short README in the plugin repo: the north star (goals, non-goals, the pipeline, the human gates, the rules that made Dunraven work), to keep the skills in check without restating them. Details live in the skills only.
-36. **The Claude Design prompt is a skill file, not generated on the fly** (2026-11-17). `plugin/skills/design-brief/` holds `brief.md` (rules R1–R13), `elements.schema.json`, and `copy-brief.sh`, which joins them and copies the result to the clipboard for Nik to paste. It's versioned (`design-brief v1`); the canvas's `flows.md` header records the version it follows, and design-sync cites rule numbers and flags an older version as a decision. Also added by the brief: a Data column per screen (the fixture, D-29), a Status table for what's final, and `data-screen` on each screen frame. Started locally at `~/Claude/Projects/idea-to-app/` (no git or GitHub yet).
+36. **The Claude Design prompt is a skill file, not generated on the fly** (2026-11-17). `plugin/skills/design-brief/` holds `brief.md` (rules R1–R13), `elements.schema.json`, and `copy-brief.sh`, which joins them and copies the result to the clipboard for Nik to paste. It's versioned (`design-brief v1`); the canvas's `flows.md` header records the version it follows, and design-sync cites rule numbers and flags an older version as a decision. Also added by the brief: a Data column per screen (the fixture, D-29), a Status table for what's final, and `data-screen` on each screen frame. Started locally at `~/Claude/Projects/prd-to-prod/` (no git or GitHub yet).
 37. **Stage 0 built and run** (2026-11-17). `plugin/skills/intake/SKILL.md` was run on Workout Log, now named **Superset** (`~/Claude/Projects/Superset/`). It saved the claude.ai idea chat verbatim (read through Nik's logged-in browser), copied PRD v3, recorded the canvas link and version, and wrote `intake.md` and `STATUS.md`. Lessons: page-tool output is cut off at about 1 KB per call, so long chats are read in slices; and the canvas version changes while Nik edits, so intake records the version as "at intake", not as a pin.
+38. **GitHub setup decided** (2026-11-22, `github-setup.md` G-01–G-17): the skill is named `prd-to-prod` (public, MIT), and Superset is public. `gh` CLI is installed. Branch protection only blocks force-pushes and deletion of `main`; there's no PR requirement, and CI reports but doesn't block. Commits have no Co-Authored-By line. Apps are public by default, so intake puts raw chats and real personal data in a gitignored `private/` folder (intake step 2), and fixtures are synthetic.
+39. **Curated design screenshots in the app repo** (amends 23): when Nik marks a design version final, the screens he picks are rendered from the pinned version to `docs/design/<version>/<screen-id>.png` and committed, for the GitHub README. They're screenshots, not design files, labeled by version, and never edited. Stage 10 adds screenshots of the live app beside them.
 
 ## 12. Distribution: the project scaffold
 
-One public GitHub repo (working name `nikrom17/idea-to-app`) holds everything that's the same for every project. **Build order (decisions 28 and 32):** the plugin is built stage by stage during the Workout Log build; `template/` and `new-project.sh` come after Workout Log ships, shaped by comparing all three apps. The layout below is the target.
+One public GitHub repo (working name `nikrom17/prd-to-prod`) holds everything that's the same for every project. **Build order (decisions 28 and 32):** the plugin is built stage by stage during the Workout Log build; `template/` and `new-project.sh` come after Workout Log ships, shaped by comparing all three apps. The layout below is the target.
 
 ```
-idea-to-app/
+prd-to-prod/
 ├── plugin/                    # the skills, packaged as a Claude Code plugin
 │   └── skills/
-│       ├── idea-to-app/       # master: runs the stages in order
+│       ├── prd-to-prod/       # master: runs the stages in order
 │       ├── prd-vet/           # stage 1, including option research and flows.md
 │       ├── design-brief/      # the versioned prompt pasted into Claude Design (rules R1–R13 + elements schema)
 │       ├── design-sync/       # the design-sync validator (stages 1, 4, and design changes)
@@ -580,7 +582,7 @@ idea-to-app/
 ├── template/                  # copied into each new project
 │   ├── app/                   # the default stack, empty but working (lint, test, build, deploy)
 │   ├── docs/                  # PRD, HLD, research, flows.md, and elements templates (the last two are given to Claude Design)
-│   ├── idea-to-app.config.json  # ui.fidelity, ui.tolerance_px, canvas link
+│   ├── prd-to-prod.config.json  # ui.fidelity, ui.tolerance_px, canvas link
 │   ├── .design-cache/         # gitignored; pinned canvas version, rebuilt each run
 │   ├── pocs/                  # POC doc template
 │   ├── validation/            # criteria, rubric, and report templates
@@ -591,7 +593,7 @@ idea-to-app/
 └── new-project.sh             # creates a project repo from template/
 ```
 
-- **Starting a project:** `new-project.sh <name>` creates a new git repo from `template/`, optionally creates its GitHub repo, and opens Claude Code there. Then run `/idea-to-app`.
+- **Starting a project:** `new-project.sh <name>` creates a new git repo from `template/`, optionally creates its GitHub repo, and opens Claude Code there. Then run `/prd-to-prod`.
 - **Skills are installed once, not copied.** Install the plugin from the GitHub repo once, and every project uses the same version. A fix to a skill reaches every project after `/plugin update`. If skills were copied into each project, every copy would drift.
 - **Public vs. private:**
   - **Scaffold and skills: public.** They hold no secrets or personal data.

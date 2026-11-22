@@ -1,7 +1,6 @@
-# GitHub setup: idea-to-app and Superset
+# GitHub setup: prd-to-prod and Superset
 
-Status: **Round 2**, 2026-11-17. Nothing has been pushed or created on GitHub.
-Reply on any `Nik:` line, or by ID in chat. Items still Open: G-05, G-06, G-11, G-17.
+Status: **All decided**, 2026-11-22. Nothing has been pushed yet. The one remaining step is `! gh auth login` (G-01).
 
 ## Both repos
 
@@ -18,21 +17,21 @@ Outcome: Commits keep `Nik Roman` with your Gmail, in both repos.
 
 ### G-04 · Claude attribution        Status: Decided
 Nik: remove co-authored... it's kind of a given since this is a Claude skill
-Outcome: Removed from idea-to-app's commit (amended). Superset's is removed when G-17 rewrites its commit. Future commits don't add it (saved as a preference).
+Outcome: Removed from both repos' commits (amended before any push). Future commits don't add it (saved as a preference).
 
-### G-05 · Branch protection        Status: Open
+### G-05 · Branch protection        Status: Decided
 Nik: what are you proposing for branch protection?
 Options:
 (a) **Minimal:** on `main`, block force-pushes and deletion. No pull-request requirement, so you and the lead build agent push directly, the way Dunraven worked. From stage 8, a GitHub Actions run (lint, unit tests, build) on every push gives a red or green badge but doesn't block. The real gate stays the independent verifier.
 (b) **PR-gated:** every change goes through a pull request with required CI checks. It's safer against a bad push, but every agent merge becomes a PR, which slows the build loop and adds cost for a solo project.
 (c) **None.**
 Recommend: (a). The verifier, the frozen criteria, and the integrity diff already catch weakened tests and bad merges. Branch protection only has to stop history from being lost.
-Nik:
-Outcome:
+Nik: okay
+Outcome: (a), 2026-11-22, on both repos.
 
-## idea-to-app (the skills)
+## prd-to-prod (the skills)
 
-### G-06 · Name        Status: Open
+### G-06 · Name        Status: Decided
 Nik: give me 3 alternative names
 Options:
 (a) `idea-to-app` (current): matches the skill's input and output.
@@ -40,8 +39,8 @@ Options:
 (c) `spec-to-ship`: a familiar phrase, and not tied to "PRD".
 (d) `proven-build`: names what makes it different, that every requirement is proven by an independent verifier.
 Recommend: (a) or (b). The skill's commands carry the name (`/idea-to-app:intake`), so shorter and plainer reads better.
-Nik:
-Outcome:
+Nik: prd-to-prod
+Outcome: `nikrom17/prd-to-prod`, 2026-11-22. The local folder is now `~/Claude/Projects/prd-to-prod/`, and every reference in the skills, the skill PRD, Superset, and memory was renamed. Commands will be `/prd-to-prod:intake` and so on.
 
 ### G-07 · Visibility        Status: Decided
 Outcome: Public (accepted).
@@ -57,13 +56,13 @@ Outcome: Yes. Every decision in it is Decided. It moved to `docs/skill-prd.md` i
 Nik: MIT is fine for the skill
 Outcome: `LICENSE` (MIT, © 2026 Nik Roman) added. A placeholder README gets added with the first push.
 
-### G-11 · What "plugin" means here        Status: Open
+### G-11 · What "plugin" means here        Status: Decided
 Nik: what is a plugin in this context?
 A **Claude Code plugin** is a folder with a small manifest (`.claude-plugin/plugin.json`) that bundles skills, subagent definitions (like the verifier and builder), slash commands, and hooks. You install it once per computer from a git repo with `/plugin install`. From then on it works in every project (for example `/idea-to-app:intake`), and `/plugin update` pulls the latest version from GitHub.
 Why it fits: one copy of the skill for all apps (decision 8), with versions coming from git history. The alternative is copying the skill folders into `~/.claude/skills/`, which works but doesn't carry the agent definitions or version updates.
 Recommend: add the manifest once stages 0–1b are working on Superset. Until then I run the skills directly from this folder.
-Nik:
-Outcome:
+Nik: does this mean it's officially published? Could it get GitHub stars?
+Outcome: Answered. Stars come from the repo being public, which happens at the first push, with or without a plugin. The manifest only makes it installable. Anyone who finds the repo can run `/plugin marketplace add nikrom17/prd-to-prod`. Being listed in Anthropic's own plugin directory is a separate submission you'd choose to make later. The manifest still gets added once stages 0–1b work.
 
 ## Superset (the app)
 
@@ -83,7 +82,7 @@ Outcome: Depends on G-17.
 ### G-16 · Hosting        Status: Decided
 Outcome: Nothing until stage 6 (accepted).
 
-### G-17 · The inputs folder in a public repo        Status: Open
+### G-17 · The inputs folder in a public repo        Status: Decided
 Source: G-13. Today `inputs/` holds the idea chat (your words, workout weights, and file paths), PRD v3, and the canvas pointer.
 Proposal:
 1. **Committed:** product requirements and their pointers: `intake.md`, `STATUS.md`, `inputs/workout-log-app-prd.md`, and `inputs/design-canvas.md`.
@@ -93,8 +92,8 @@ Proposal:
 5. **Later (heads-up):** your real workout history from Notion is personal data, so it goes in `private/` as well. The fixture library (D-29) that tests and the `/gallery` use is made-up data, so the public repo never holds your real sessions.
 6. **The skill changes to match:** intake saves chats to `private/` by default, and asks once whether the repo will be public.
 Question on "assets": today the design stays in the canvas, and the repo only holds the link (decision 23, to avoid two copies drifting). App assets like icons and images get committed with the app code at stage 6. Did you mean those, or do you want the design files themselves in the repo?
-Nik:
-Outcome:
+Nik: I think there should be some screenshots of the designs curated for GitHub, maybe not a raw design file
+Outcome: Proposal 1–6 done, 2026-11-22. The chat is in `private/` (gitignored), commit `fb28f4c` was rewritten as `cc87f5b` without the chat, and the intake skill now defaults to `private/`. **Plus curated screenshots:** when you mark a design version final, the screens you pick are rendered from that pin to `docs/design/<version>/<screen-id>.png` and committed. They're screenshots, not design files, and never edited. The canvas isn't final yet, so the first push has none. Skill decision 39.
 
 ## Out of scope here
 

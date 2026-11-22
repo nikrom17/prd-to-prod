@@ -1,6 +1,6 @@
 ---
 name: design-brief
-description: The fixed, versioned prompt Nik pastes into a Claude Design chat so the canvas follows the idea-to-app conventions (flows.md, elements.json, tokens, screen frames). Use when Nik asks for the design prompt, starts or resumes a Claude Design chat, or a design-sync finding says the canvas is on an older brief version.
+description: The fixed, versioned prompt Nik pastes into a Claude Design chat so the canvas follows the prd-to-prod conventions (flows.md, elements.json, tokens, screen frames). Use when Nik asks for the design prompt, starts or resumes a Claude Design chat, or a design-sync finding says the canvas is on an older brief version.
 ---
 
 # design-brief
