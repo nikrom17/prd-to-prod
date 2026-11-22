@@ -28,3 +28,7 @@ The only source for what the design chat is told. Never write design-chat instru
 - The version string `design-brief vN` appears in: the `brief.md` title, `elements.schema.json` (`brief` const and `$id`), and the `flows.md` header the design chat writes (R1).
 - design-sync reads the canvas's `brief:` value. If it's older than this file, that's a decision for Nik (re-paste, or accept the older conventions for this gate), not an automatic failure.
 - design-sync cites rule numbers (R1–R13) in its findings, so keep the numbers stable: add new rules at the end, and mark removed ones "retired" instead of renumbering.
+
+## Sending to the design chat from Claude Code
+
+When Nik asks Claude to send it, open the design chat in Chrome (the canvas project's chat from claude.ai › Design), copy with `copy-brief.sh`, and paste with cmd+V. A long paste becomes an attachment, which works. **Never type line breaks into the chat box: Enter sends.** Put any approval or instruction on one line, or paste it as part of the prompt. Read the reply with the page's text, not screenshots, then close the tab.
