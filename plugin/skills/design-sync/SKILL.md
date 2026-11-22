@@ -33,3 +33,8 @@ PRD decisions that change what's drawn are answered in the design chat during it
 - Nik makes every call. The validator and check.py never resolve anything.
 - Never edit the canvas directly. Changes go through the design chat.
 - Cite screen numbers, edge cases, and rule numbers (R1–R14) in every finding.
+
+## Token notes (to tune)
+
+- An Artifact read puts small text files (`elements.json`, `styles.css`) inline in the lead's context, about 20 KB each run. Only read them when `flows.md` mentions an element or token change, or when check.py needs a full run (first run, gates).
+- Skip the validator when the only changes are fixes from an approved change request. Spot-check them in `flows.md` instead.
