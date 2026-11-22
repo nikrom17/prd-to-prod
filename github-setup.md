@@ -1,6 +1,6 @@
 # GitHub setup: prd-to-prod and Superset
 
-Status: **All decided**, 2026-11-22. Nothing has been pushed yet. The one remaining step is `! gh auth login` (G-01).
+Status: **Done**, 2026-11-22. Both repos were created public and pushed over SSH, with a `protect-main` ruleset on each that blocks force-pushes and deletion of `main`.
 
 ## Both repos
 
