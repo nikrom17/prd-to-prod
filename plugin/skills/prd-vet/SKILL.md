@@ -9,6 +9,8 @@ Output: `prd.md` (one current version, older ones in `archive/`), `research/opti
 
 ## 1. Reconcile the inputs (first pass on any existing material)
 
+With a design canvas, the cycle is design-led: this first pass gives a rough PRD, the design iterates with design-sync in screens mode, and the PRD is aligned to the final screens afterward (design-sync PRD mode). Don't keep the PRD in lockstep while the design is changing.
+
 Read every input listed in `intake.md` in full. With a design canvas, read `flows.md` and `elements.json` at the version intake recorded (or the latest, and record it).
 
 - **Newest intent wins as the draft, never silently.** Put each conflict between inputs into the Decisions section: what each source says (cite `inputs/…` § or a screen number), options, and a recommendation (usually the newer source). Nik confirms each one.

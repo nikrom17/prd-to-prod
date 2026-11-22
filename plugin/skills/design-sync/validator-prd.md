@@ -1,4 +1,6 @@
-# Design-sync validator prompt
+# Design-sync validator prompt · PRD mode
+
+Used once flows are Final, to align the PRD to the screens. The screens win by default.
 
 Fill in the paths, then give this to a fresh subagent with only Read, Grep, and Glob.
 
@@ -20,4 +22,6 @@ Check, for what changed (or for everything on a first run):
 
 Don't report visual style, wording preferences, or anything check.py already reported.
 
-Reply with only a list. Each item: type (mismatch, coverage, status, or blocked), the IDs on both sides, one sentence on what's wrong, and a suggested place to record it (prd.md P-xx, a design change request, or a PRD update with no decision needed). If there's nothing, say "No findings."
+The screens are the source of truth. For each mismatch, suggest the PRD change that matches the screens. Suggest a decision (P-xx) only when the screens can't settle it: data rules, offline and sync, sign-in, security, imports, or anything no screen shows.
+
+Reply with only a list. Each item: type (mismatch, coverage, status, or blocked), the IDs on both sides, one sentence on what's wrong, and either the PRD edit to make or why it needs a P-xx decision. If there's nothing, say "No findings."
