@@ -10,7 +10,7 @@ The only source for what the design chat is told. Never write design-chat instru
 ## Run
 
 1. Run `sh "${CLAUDE_SKILL_DIR:-$(dirname "$0")}/copy-brief.sh"`. It joins `brief.md` with `elements.schema.json` and copies the result to the clipboard. Use `--print` to show it instead.
-2. For a canvas that existed before the brief: after Nik pastes the brief and the design agent lists the gaps, run `copy-brief.sh adopt` for the follow-up prompt (`adopt.md`).
+2. For a canvas that existed before the brief: after Nik pastes the brief and the design agent lists the gaps, run `copy-brief.sh adopt "<current pages>"` for the follow-up prompt (`adopt.md`). Ask Nik which pages are current first, because everything else gets archived.
 3. Tell Nik the version (the first line) and that it's ready to paste into the Claude Design chat. Don't repeat the brief in chat.
 
 ## Files

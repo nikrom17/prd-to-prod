@@ -2,12 +2,13 @@
 # Assemble the design brief (brief.md + elements.schema.json) and copy it to the clipboard.
 # Usage: copy-brief.sh [adopt] [--print]
 #   (no arg) the brief: brief.md + elements.schema.json
-#   adopt    the follow-up prompt that brings an existing canvas in line with the brief
+#   adopt "<current pages>"   the follow-up prompt that brings an existing canvas in line with the brief
 set -eu
 dir="$(cd "$(dirname "$0")" && pwd)"
 if [ "${1:-}" = "adopt" ]; then
   shift
-  out="$(sed -n '/^---$/,$p' "$dir/adopt.md" | sed 1d)"
+  pages="${1:?adopt needs the current page names, e.g. adopt \"the Final page\"}"; shift
+  out="$(sed -n '/^---$/,$p' "$dir/adopt.md" | sed 1d | sed "s/{{CURRENT_PAGES}}/$pages/")"
 else
 out="$(python3 -I -c '
 import sys, pathlib
